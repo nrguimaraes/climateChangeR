@@ -1,10 +1,18 @@
-#Hello Git
 library(tidyverse)
 library(patchwork)
 library(lubridate)
 library(zoo)
 library(plotly)
 
+
+
+#Adapting the content from https://rethinking.rbind.io/2018/11/16/the-top-five-climate-charts-using-ggplot2/ 
+#to work with interactive plots
+
+
+
+#Function to load the data
+#if overwrite is set to True the current datasets downloaded are replaced (useful when new data is available)
 
 load_data<-function(overwrite=F){
   datasets<-list()
@@ -95,49 +103,36 @@ load_data<-function(overwrite=F){
   return(datasets)
 }
 
+
+#load the data
 datasets<-load_data(overwrite=F)
 
 
 
-#theme_set(theme_bw(base_size = 14))
 
 
 
 
-
-#a <- ggplot(datasets$vostok_co2,aes(x=age_ice,y=co2)) +geom_line(size=1, col='firebrick1') +scale_x_reverse(lim=c(420000,0)) +
-#  theme(axis.title.x=element_blank(), axis.text.x=element_blank()) +labs(y=expression(CO[2]*' concentration' ))
-
-
+#Build the first plot with respect to co2
 
 a1 <- plot_ly(datasets$vostok_co2,x=~age_ice,y=~co2,type = 'scatter', mode = 'lines',name = ~"Co2")%>%
   layout(xaxis = list(autorange = 'reversed',range=c(420000,0),showticklabels=F,title=""),yaxis=list(title='CO2 concentration')) 
 
 
 
-
+#Buid the second plot with respect to temperature
 b1<-plot_ly(datasets$vostok_temperature,x=~age_ice,y=rollmean(datasets$vostok_temperature$temp, 8, na.pad=TRUE),type = 'scatter', mode = 'lines',name = ~"Temperature") %>%
   layout(xaxis = list(title='Millennia before present',autorange = 'reversed',range=c(420000,0),showticklabels=T),yaxis=list(title='Temperature (C)'))
 
 
 
 
-
+#aggregate both with a shared X value (for better visualization interaction)
 fig <- subplot(nrows=2,a1, b1,shareX = T,shareY = F)  %>% layout(title = "Paleoclimate: The Link Between CO2 and Temperature")
 
 
 #fig
 
-#b <- ggplot(datasets$vostok_temperature,aes(x=age_ice,y=temp)) +geom_line(aes(y=rollmean(temp, 8, na.pad=TRUE)), size=1, col='dodgerblue2') +scale_x_reverse(lim=c(420000,0),
-#                                                                                                                                           labels = scales::unit_format(unit='',scale = 1e-3)) +labs(x='Millennia before present', 
-#                                                                                                                                                                                                     y='Temperature (C)')
-
-#(c <- a / b + plot_annotation(title = expression('Paleoclimate: The Link Between '*CO[2]*' and Temperature'), caption = 'Source: Carbon Dioxide Information Analysis Center (CDIAC)\nhttp://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html',
-#                             subtitle='420,000 years from the Vostok ice core, Antarctica.', theme = theme(  plot.title = element_text(size = 20))))
-
-
-
-#################LATER#####################################
 
 
 
@@ -150,20 +145,15 @@ datasets$co2<-datasets$co2[datasets$co2$average!=-99.99,]
 agg<-aggregate(x=datasets$co2, by=list(datasets$co2$year,datasets$co2$month),FUN=mean)
 agg<-agg[order(agg$year),]
 
-#fig2<-plot_ly(datasets$co2,x=~year,y=~average,type = 'scatter', mode = 'lines')%>% add_trace(y=~trend)
 
 
+#build plot with respect to co2 in atmosphere
 fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2")%>% add_trace(y=~trend,name="trend")%>%
   layout(title='Rising Atmospheric CO2 (Keeling Curve)')
   
       
 #fig2
 
-
-#(d <- ggplot(datasets$co2, aes(x=date, y=average)) +geom_line(color='dodgerblue2', alpha=0.7) +
-#    scale_x_date(name=NULL, date_breaks='10 years', lim=c(ymd('1963-01-01'), ymd('2020-01-01')), date_labels='%Y') +scale_y_continuous(lim=c(300, 410), breaks=seq(300, 400, 20)) +
-#    geom_line(aes(y=trend), size=1, col='firebrick1') +labs(title=expression('Rising Atmospheric '*CO[2]*' (Keeling Curve)'), subtitle=expression('Mauna Loa '*CO[2]*' monthly mean ppm'),
-#                                                           y=expression(CO[2]*' concentration in air' ), caption='Source: NOAA/ESRL and Scripps Institution of Oceanography.\nhttps://www.esrl.noaa.gov/gmd/ccgg/trends/data.html'))
 
 
 
@@ -177,17 +167,10 @@ fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2"
 
 
 
-#(e <- ggplot(datasets$land_ocean_temp, aes(x=date, y=annmean)) +geom_line(alpha=0.75, aes(color='Annual mean')) + 
-#    scale_x_date(name=NULL, lim=c(as.Date('1878-01-01'),as.Date('2020-01-01')), date_breaks='15 years', date_labels='%Y') +
-#    scale_y_continuous() +geom_smooth(size=1.1, se=F, span=0.2, aes(color='Loess smoothing'),method = 'loess', formula='y ~ x') +
-#    labs(title='Global Land-Ocean Temperature Index (LOTI)', subtitle='Global surface temperature relative to 1951-1980 average',
-#         y='Temperature Anomaly (C)', caption='Source: NASA Goddard Institute for Space Studies\nhttps://data.giss.nasa.gov/gistemp/') +
-#    scale_color_manual(name=NULL, values=c('dodgerblue2','firebrick1')) +theme(legend.position = c(0.15,0.85),legend.background=element_blank()))
-
-
-
+#create smoothing data
 loess_smooth<-loess.smooth(y=datasets$land_ocean_temp$annmean, x=datasets$land_ocean_temp$date,span = 0.2)
 
+#build plot concerning the global land-ocean temperature as well as the smooth line
 fig3<- plot_ly(data=datasets$land_ocean_temp,x=~date,y=~annmean,type = 'scatter', mode = 'lines',name = "Annual mean") %>% 
           add_trace(data=loess_smooth,x=loess_smooth$x,y=loess_smooth$y,name="Loess smoothing") %>%
           layout(title='Global Land-Ocean Temperature Index (LOTI)',yaxis = list(title='Temperature Anomaly (C)'),xaxis = list(title='Date'))
@@ -196,34 +179,29 @@ fig3<- plot_ly(data=datasets$land_ocean_temp,x=~date,y=~annmean,type = 'scatter'
   
 
 
+#Replace the method values for a more comprehensive visualization
+
 datasets$sea_level<-datasets$sea_level %>% 
   mutate(method = replace(method, method == 'gmsl_tide', "Coastal tide gauge records"))%>% 
   mutate(method = replace(method, method == 'gmsl_sat', "Satellite observations"))
 
+#Build the plot for sea_leval data
 fig4<-plot_ly(datasets$sea_level,x=~date,y=~gmsl,color = ~method, type = 'scatter', mode = 'lines')
 
 
-#(f <- ggplot(datasets$sea_level, aes(x=date,color=method,y=gmsl)) +geom_line(alpha=0.7,size=1) +
-#    scale_x_datetime(name=NULL, breaks='15 years', lim=c(ymd_hms('1878-01-01 00:00:00'), ymd_hms('2020-01-01 00:00:00')), date_labels ='%Y') +
-#    scale_color_manual(values=c('dodgerblue2','firebrick1'),labels=c('Satellite observations','Coastal tide gauge records')) +theme(legend.position = c(0.20,0.80),legend.background=element_blank(),legend.title = element_blank()) +
-#    scale_y_continuous(breaks=seq(-200,75,25)) +
-#    labs(title='Sea Level Change', subtitle='Tide gauges: 1880-2009; Satellite: 1992-2018, calibrated to 1993 tide gauge average.', y='Variation (mm)', caption='Sources: University of Colorado Sea Level Research Group (sat)\nhttp://sealevel.colorado.edu/\nCSIRO (tide gauge)\nhttp://www.cmar.csiro.au/sealevel/sl_data_cmar.html'))
 
 
 
 
 
-
+#Fitting with linear model
 lm_e<-lm(datasets$polar_ice$extent ~datasets$polar_ice$year)
 
-fig5<-plot_ly(datasets$polar_ice,x=~year,y=~extent,type = 'scatter', mode = 'lines')%>%
-  add_trace(x=datasets$polar_ice$year,y=lm_e$fitted.values,name="s")
+#Buil the plot for the artic sea ice minimum with the respective fitted values
+fig5<-plot_ly(datasets$polar_ice,x=~year,y=~extent,type = 'scatter', mode = 'lines',name="measure")%>%
+  add_trace(x=datasets$polar_ice$year,y=lm_e$fitted.values,name="Linear Regression")%>%
+  layout(title='Arctic Sea Ice Minimum',yaxis = list(title='million square km'),xaxis = list(title='Year'))
 
-
-#(g <- ggplot(datasets$polar_ice,aes(x=year, y=extent)) +geom_line(size=1, color='firebrick1') +
-#    scale_x_datetime(name=NULL, breaks='5 years', date_labels='%Y', lim=c(ymd_hms('1978-01-01 00:00:00'), ymd_hms('2020-01-01 00:00:00'))) +
-#    scale_y_continuous(lim=c(3,8)) + geom_smooth(method='lm', se=F, linetype=2, size=0.5) +
-#    labs(title='Arctic Sea Ice Minimum', subtitle='September average sea ice extent. Linear regression line in blue.', y='million square km', caption='Source: National Snow & Ice Data Center\nhttps://nsidc.org/data/seaice_index\nftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/monthly/data/N_09_extent_v3.0.csv'))
 
 
 
