@@ -21,7 +21,7 @@ ggplot(gbr.dat.t, aes(x=fromYear,y=data,group=scenario,colour=scenario)) +
 
 
 
-br.dat.p <- get_ensemble_precip("GBR", "annualavg", 1900, 2100)
+gbr.dat.p <- get_ensemble_precip("GBR", "annualavg", 1900, 2100)
 gbr.dat.p <- subset(gbr.dat.p, gbr.dat.p$percentile == 50)
 ggplot(gbr.dat.p, aes(x = fromYear, y = data, group = scenario, colour = scenario)) +
   geom_point() + geom_path() + theme_bw() + xlab("Year") + ylab("Annual Average precipitation in mm")

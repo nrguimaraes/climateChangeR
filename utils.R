@@ -209,21 +209,17 @@ fig5<-plot_ly(datasets$polar_ice,x=~year,y=~extent,type = 'scatter', mode = 'lin
 
 
 
-
-library(raster)
-library(sp)
-
-# Retrieve average temperature data from WorldClim
-global.temp <- getData('worldclim', download = TRUE, var = 'tmean', res = 5)
-
-
-
-# Global Temperature across 12 months (1960-1990)
-plot(global.temp/10)
-
-
-
-
+# library(raster)
+# library(sp)
+# 
+# # Retrieve average temperature data from WorldClim
+# global.temp <- getData('worldclim', download = TRUE, var = 'tmean', res = 5)
+# 
+# 
+# 
+# # Global Temperature across 12 months (1960-1990)
+# plot(global.temp/10)
+# 
 
 
 
