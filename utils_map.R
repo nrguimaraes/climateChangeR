@@ -5,7 +5,7 @@ library(readr) # CSV file I/O, e.g. the read_csv function
 library(dplyr)
 library(tidyr)
 library(plotly)
-
+library(zoo)
 #https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data
 #http://berkeleyearth.org/about/
 
@@ -26,6 +26,8 @@ clim_data  %>%separate(col = dt, into = c("Year", "Month", "Day"), convert = TRU
 
 #print(unique(clim_data$Country))
 
+
+
 TYPE="max"
 region="world"
 #examples
@@ -37,6 +39,18 @@ if(TYPE=="average"){
     group_by(Year,Country) %>%
     summarise(value=mean(AverageTemperature))-> clim_dataf
 }
+
+
+if(TYPE=="mov_average"){
+                 
+  
+  clim_data_test %>% mutate(decade = floor(Year/10)*10) %>%
+    group_by(Year,decade,Country) %>%
+    mutate(rM=rollmean(value,10, na.pad=TRUE, align="right"))->test
+  
+}
+
+
 
 
 
@@ -79,12 +93,12 @@ clim_data_test$Country <- factor(clim_data_test$Country)
 
 clim_data_test<-clim_data_test[complete.cases(clim_data_test),]
 
-"""
-clim_data_test %>% mutate(decade = floor(Year/10)*10) %>% 
-  group_by(decade,Country) %>% 
-  summarize_all(mean) %>% 
-  select(-Year)
-"""
+ 
+# clim_data_test %>% mutate(decade = floor(Year/10)*10) %>% 
+#   group_by(decade,Country) %>% 
+#   summarize_all(mean) %>% 
+#   select(-Year)
+
 
 fig <- clim_data_test %>%
   plot_ly(
