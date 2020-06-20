@@ -27,12 +27,27 @@ clim_data  %>%separate(col = dt, into = c("Year", "Month", "Day"), convert = TRU
 #print(unique(clim_data$Country))
 
 
+#considering a small time lapse or all data available
+YEAR="all"
+#YEAR=c(1950,2000)
 
-TYPE="max"
-region="world"
+
+TYPE="average"
+#REGION="world"
 #examples
-#region=c("Portugal")
-#region=c("Portugal","Spain")
+REGION=c("Portugal")
+#REGION=c("Portugal","Spain")
+
+
+if(YEAR!="all"){
+  if(typeof(YEAR)=="list"){
+    clim_data<-clim_data[(clim_data$Year>=YEAR[1]) & (clim_data$Year<=YEAR[2]),]
+  }
+  
+}
+
+
+
 if(TYPE=="average"){
   clim_data %>% 
     select(Year,AverageTemperature,Country) %>%
@@ -61,8 +76,8 @@ if(TYPE=="max"){
     summarise(value=max(AverageTemperature))-> clim_dataf
 }
 
-if(region!="world"){
-  clim_dataf<-clim_dataf[clim_dataf$Country %in% region,]
+if(REGION!="world"){
+  clim_dataf<-clim_dataf[clim_dataf$Country %in% REGION,]
  
   g <- list(
     fitbounds = "locations",
