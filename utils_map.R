@@ -32,7 +32,7 @@ YEAR="all"
 #YEAR=c(1950,2000)
 
 
-TYPE="average"
+TYPE="max"
 #REGION="world"
 #examples
 REGION=c("Portugal")
@@ -94,6 +94,26 @@ if(REGION!="world"){
 
 
 
+
+
+
+
+
+
+
+
+x <- clim_dataf
+s <- split(x, cumsum(c(TRUE, diff(x$value) <= 0.001)))
+
+max<-0
+
+for(i in s){
+  if(nrow(i)>max){
+    t<-i
+    max<-nrow(i)
+  }
+}
+print(t)
 clim_data_test<-clim_dataf
 
 
