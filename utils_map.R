@@ -27,24 +27,34 @@ clim_data  %>%separate(col = dt, into = c("Year", "Month", "Day"), convert = TRU
 #print(unique(clim_data$Country))
 
 
-#considering a small time lapse or all data available
-YEAR="all"
-#YEAR=c(1950,2000)
+#considering a small time interval or all data available
+#EXAMPLES:
+#YEAR="all"
+#YEAR=c(1950,2018)
 
+YEAR="all"
+
+#type of function to use
+#EXAMPLES 
+#TYPE="max"
+#TYPE="average"
 
 TYPE="max"
-#REGION="world"
+
+
 #examples
-REGION=c("Portugal")
+#REGION="world"
+#REGION=c("Brazil")
 #REGION=c("Portugal","Spain")
 
 
-if(YEAR!="all"){
-  if(typeof(YEAR)=="list"){
+REGION="world"
+
+
+if(typeof(YEAR)=="double"){
     clim_data<-clim_data[(clim_data$Year>=YEAR[1]) & (clim_data$Year<=YEAR[2]),]
+   
   }
-  
-}
 
 
 
@@ -56,15 +66,14 @@ if(TYPE=="average"){
 }
 
 
-if(TYPE=="mov_average"){
-                 
-  
-  clim_data_test %>% mutate(decade = floor(Year/10)*10) %>%
-    group_by(Year,decade,Country) %>%
-    mutate(rM=rollmean(value,10, na.pad=TRUE, align="right"))->test
-  
-}
-
+# if(TYPE=="mov_average"){
+#                  
+#   
+#   clim_data_test %>% mutate(decade = floor(Year/10)*10) %>%
+#     group_by(Year,decade,Country) %>%
+#     mutate(rM=rollmean(value,10, na.pad=TRUE, align="right"))->test
+#   
+# }
 
 
 
@@ -75,6 +84,8 @@ if(TYPE=="max"){
     group_by(Year,Country) %>%
     summarise(value=max(AverageTemperature))-> clim_dataf
 }
+
+
 
 if(REGION!="world"){
   clim_dataf<-clim_dataf[clim_dataf$Country %in% REGION,]
@@ -100,20 +111,23 @@ if(REGION!="world"){
 
 
 
+# 
+# 
+# x <- clim_dataf
+# s <- split(x, cumsum(c(TRUE, diff(x$value) <= 0.001)))
+# 
+# max<-0
+# 
+# for(i in s){
+#   if(nrow(i)>max){
+#     t<-i
+#     max<-nrow(i)
+#   }
+# }
+# print(t)
 
 
-x <- clim_dataf
-s <- split(x, cumsum(c(TRUE, diff(x$value) <= 0.001)))
 
-max<-0
-
-for(i in s){
-  if(nrow(i)>max){
-    t<-i
-    max<-nrow(i)
-  }
-}
-print(t)
 clim_data_test<-clim_dataf
 
 
@@ -151,7 +165,7 @@ fig <- clim_data_test %>%
 
 
 fig <- fig %>% layout(
-  title="Evolution of the Average Temperature (C) through the years (1743-2013)",
+  title= plot_title<-paste0("Evolution of the Average Temperature (C) through the years (",clim_data_test$Year[1],"-",clim_data_test$Year[nrow(clim_data_test)]),
   geo=g
 )
 
