@@ -1,3 +1,7 @@
+#https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data
+#http://berkeleyearth.org/about/
+
+
 
 library(ggplot2) # Data visualization
 library(readr) # CSV file I/O, e.g. the read_csv function
@@ -5,20 +9,18 @@ library(dplyr)
 library(tidyr)
 library(plotly)
 library(zoo)
+
+#Loads data regarding US state names and abbreviations
 load("state_names.RDATA")
 load("state_abbs.RDATA")
-#https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data
-#http://berkeleyearth.org/about/
 
 
 
 
 #CHANGE THESE VARIABLES TO SEE NEW MAPS
-#TYPE CAN BE "average" or "max" for average and max temperature respectively
-#Region can be world or a list of any of the countries available
-#to see the list of possible countries uncomment the next line
-
-#print(unique(clim_data$Country))
+#TYPE can be "average" or "max" for average and max temperature respectively
+#YEAR can be world or a list of any of the countries available
+#YEAR can be all or an interval of time 
 
 
 #considering a small time interval or all data available
@@ -46,7 +48,8 @@ REGION="USA"
 
 
 
-
+#Function getCode receives a state name as an input and output its abbreviation.
+#In case no abbreviation is found, the output is the state name
 getCode<-function(state_name){
   state_name<-as.character(state_name)
   temp<-state.abb[which(state.name==state_name)]
@@ -54,33 +57,48 @@ getCode<-function(state_name){
   return(state_name)
 }
 
+
+#Conditions regarding the region chosen
 if(REGION=="USA"){
+    #Data containing the US state temperatures
     clim_data <- read.csv("GlobalLandTemperaturesByState.csv")
     
-    
+    #Allow only the complete cases
     clim_data<-clim_data[complete.cases(clim_data),]
     
+    #Conversion from date to different columns
     clim_data  %>%separate(col = dt, into = c("Year", "Month", "Day"), convert = TRUE) ->clim_data
     
-    
+    #Apply the function getCode to the "States" column in dataset 
     codes<-unlist(lapply(clim_data$State,getCode))
+    
+    #Create a new column (named variable ) with the codes
     clim_data$variable<-codes
     
+    #Set the location type of the map to USA-states (so the function know how to interpret the data we are passing it)
     location_mode<-'USA-states'
   
 }else{
+  #Data countainng countries temperature 
   clim_data <- read.csv("GlobalLandTemperaturesByCountry.csv")
+  
+  #Allow only the complete cases
   clim_data<-clim_data[complete.cases(clim_data),]
   
+  #Conversion from date to different columns
   clim_data  %>%separate(col = dt, into = c("Year", "Month", "Day"), convert = TRUE) ->clim_data
   
+  #Create a new column (named variable) with the country name 
   clim_data$variable<-clim_data$Country
+  
+  #Set the location type of the map to counry-names (so the function know how to interpret the data we are passing it)
   location_mode<-'country names'
 }
 
 
 
-
+#If the type is of the variable YEAR is not a string then we apply conditions to the dataframe so that 
+#it only considers entries between the interval defined
 if(typeof(YEAR)=="double"){
     clim_data<-clim_data[(clim_data$Year>=YEAR[1]) & (clim_data$Year<=YEAR[2]),]
    
@@ -88,28 +106,18 @@ if(typeof(YEAR)=="double"){
 
 
 
-
+#Conditions regarding the type of function chosen
+#select allows the selection of certain columns then, 
+#groupby will aggregate entries by Year and Variable (which is states or countries)
+#finally summarise applies the desired function (mean or max ) to the data 
+# the final -> implies that a new dataframe named clim_dataf is created with the output of this steps
 if(TYPE=="average"){
+
   clim_data %>% 
     select(Year,AverageTemperature,variable) %>%
     group_by(Year,variable) %>%
     summarise(value=mean(AverageTemperature))-> clim_dataf
-}
-
-
-# if(TYPE=="mov_average"){
-#                  
-#   
-#   clim_data_test %>% mutate(decade = floor(Year/10)*10) %>%
-#     group_by(Year,decade,variable) %>%
-#     mutate(rM=rollmean(value,10, na.pad=TRUE, align="right"))->test
-#   
-# }
-
-
-
-
-if(TYPE=="max"){
+}else if(TYPE=="max"){
   clim_data %>% 
     select(Year,AverageTemperature,variable) %>%
     group_by(Year,variable) %>%
@@ -119,19 +127,30 @@ if(TYPE=="max"){
 
 
 
+#conditions regarding the map layout and data depending on the REGION variable
+#the "g" variable refers to geographic configuration parameters on the layout of the final map
+
 if(typeof(REGION)=="list"){
+  #only include in the dataframe the list of countries in the variable REGION
   clim_dataf<-clim_dataf[clim_dataf$variable %in% REGION,]
+  
+  #layout configuration
+  #fitbounds refers to the way the bound must be portrayed. When set to "locations" the map will be zoomed in 
+  #in the locations of the dataframe
+  #visible=True refers to the visibility of countries in the world map
   g <- list(
     fitbounds = "locations",
     visible = TRUE)  
 }else if(REGION=="world"){
-
- 
+   
+   #if REGION="world" there is no need to define the fitbounds since the default is alreay the world map 
     g <- list(
       visible=TRUE
     )
  
 }else{
+  #if none of the condition before fits then we are dealing with an individual country or the usa states
+  #for both these cases the variable fitbound must be set to "locations"
   g <- list(
     fitbounds = "locations",
     visible = TRUE)  
@@ -146,74 +165,70 @@ if(typeof(REGION)=="list"){
 
 
 
-
-# 
-# 
-# x <- clim_dataf
-# s <- split(x, cumsum(c(TRUE, diff(x$value) <= 0.001)))
-# 
-# max<-0
-# 
-# for(i in s){
-#   if(nrow(i)>max){
-#     t<-i
-#     max<-nrow(i)
-#   }
-# }
-# print(t)
-
-
-
+#We pass the information on the clim_dataf dataframe to the final dataframe that we will be using to plot our data
 clim_data_test<-clim_dataf
 
 
+#These variables refer to the maximum and minimum temperatures achieved in the selected data
+#It allows to present a constant temeprature scale through the animation
 max_value=max(clim_data_test$value)
 min_value=min(clim_data_test$value)
 
-#clim_data_smp=clim_data[sample(nrow(clim_data), 1000), ]
 
-
+#We rename the columns to better names to avoid configure additional layout details (such as the variable label)
 colnames(clim_data_test)<-c("Year","variable","Temperature")
+
+#we conver the colum to factor to discard information stored (like discarded countries) that can affect the 
+# map configuration
 clim_data_test$variable <- factor(clim_data_test$variable)
 
+#We finally perform a last check to garantee that we are working only with complete cases
 clim_data_test<-clim_data_test[complete.cases(clim_data_test),]
 
  
-# clim_data_test %>% mutate(decade = floor(Year/10)*10) %>% 
-#   group_by(decade,variable) %>% 
-#   summarize_all(mean) %>% 
-#   select(-Year)
 
 
 
 
-
+#The fig variable would contain the necessary information to plot the map. First we pass our dataframe to the 
+#plotly function using the pipes provided by dplyr.
 fig <- clim_data_test %>%
   plot_ly(
+    #Type of location we want to show (explained earlier)
     locationmode=location_mode,
+    #The column of the dataframe we want to use as value (in this case is Temperature)
     z = ~Temperature,
+    #The column of the dataframe where the geospatial information is stored (in this case is variable)
     locations=~variable,
+    #The variable for the different "frames" on the animation. In this case we want each frame to represent a year
     frame = ~Year,
+    
+    #The type of map we want to show. for more information please refer the plotly documentation
     type = 'choropleth',
-    showlegend = T,
+    #If the legend is to be show on the visualization. In this case is set to True
+    showlegend = TRUE,
+    #What color schemes to use in the Z variable. Since it is temperature we chose "bluered"
     colorscale='bluered',
+    #The limits of the scale we want to use (to avoid different scales in each frame)
     zmax=max_value,
     zmin=min_value  
     )
 
 
-
+#We complement the previous information with additional layout configurations such as the title and the geographic
+#configuration (explained earlier)
 fig <- fig %>% layout(
   title= plot_title<-paste0("Evolution of the Average Temperature (C) through the years (",clim_data_test$Year[1],"-",clim_data_test$Year[nrow(clim_data_test)],")"),
   geo=g
 )
 
+#Additional configuration parameters for the animation.In this case, we  set the time to 100 milisecond per frame
 fig <- fig %>%
   animation_opts(
-    100
+    frame=100
   )
 
 
-
+#Finally, we plot the figure 
 fig
 
