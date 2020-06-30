@@ -3,12 +3,10 @@
 
 
 
-library(ggplot2) # Data visualization
 library(readr) # CSV file I/O, e.g. the read_csv function
 library(dplyr)
 library(tidyr)
 library(plotly)
-library(zoo)
 
 #Loads data regarding US state names and abbreviations
 load("state_names.RDATA")
@@ -54,7 +52,7 @@ getCode<-function(state_name){
   state_name<-as.character(state_name)
   temp<-state.abb[which(state.name==state_name)]
   if(length(temp)>0){return(temp)}
-  return(state_name)
+  return(NA)
 }
 
 
@@ -165,25 +163,23 @@ if(typeof(REGION)=="list"){
 
 
 
-#We pass the information on the clim_dataf dataframe to the final dataframe that we will be using to plot our data
-clim_data_test<-clim_dataf
 
 
 #These variables refer to the maximum and minimum temperatures achieved in the selected data
 #It allows to present a constant temeprature scale through the animation
-max_value=max(clim_data_test$value)
-min_value=min(clim_data_test$value)
+max_value=max(clim_dataf$value)
+min_value=min(clim_dataf$value)
 
 
 #We rename the columns to better names to avoid configure additional layout details (such as the variable label)
-colnames(clim_data_test)<-c("Year","variable","Temperature")
+colnames(clim_dataf)<-c("Year","variable","Temperature")
 
 #we conver the colum to factor to discard information stored (like discarded countries) that can affect the 
 # map configuration
-clim_data_test$variable <- factor(clim_data_test$variable)
+clim_dataf$variable <- factor(clim_dataf$variable)
 
 #We finally perform a last check to garantee that we are working only with complete cases
-clim_data_test<-clim_data_test[complete.cases(clim_data_test),]
+clim_dataf<-clim_dataf[complete.cases(clim_dataf),]
 
  
 
@@ -192,7 +188,7 @@ clim_data_test<-clim_data_test[complete.cases(clim_data_test),]
 
 #The fig variable would contain the necessary information to plot the map. First we pass our dataframe to the 
 #plotly function using the pipes provided by dplyr.
-fig <- clim_data_test %>%
+fig <- clim_dataf %>%
   plot_ly(
     #Type of location we want to show (explained earlier)
     locationmode=location_mode,
@@ -218,7 +214,7 @@ fig <- clim_data_test %>%
 #We complement the previous information with additional layout configurations such as the title and the geographic
 #configuration (explained earlier)
 fig <- fig %>% layout(
-  title= plot_title<-paste0("Evolution of the Average Temperature (C) through the years (",clim_data_test$Year[1],"-",clim_data_test$Year[nrow(clim_data_test)],")"),
+  title= plot_title<-paste0("Evolution of the Average Temperature (C) through the years (",clim_dataf$Year[1],"-",clim_dataf$Year[nrow(clim_dataf)],")"),
   geo=g
 )
 
