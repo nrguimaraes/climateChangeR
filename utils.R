@@ -3,11 +3,51 @@ library(patchwork)
 library(lubridate)
 library(zoo)
 library(plotly)
-
+library(tools)
 
 
 #Adapting the content from https://rethinking.rbind.io/2018/11/16/the-top-five-climate-charts-using-ggplot2/ 
 #to work with interactive plots
+
+
+#Auxiliary function
+#adapt from https://stackoverflow.com/questions/35260659/r-download-file-rename-the-downloaded-file-if-the-filename-already-exists
+
+
+
+
+download_with_overwrite <- function(url, filename,overwrite=TRUE)
+{
+  folder<-getwd()
+  ext <- tools::file_ext(filename)
+  
+  file_exists <- grepl(filename, list.files(folder), fixed = TRUE)
+  
+  if (any(file_exists))
+  {
+    new_filename <- paste0(filename, "(", sum(file_exists), ")", ".", ext)
+  }
+  
+  d<-tryCatch({
+    download.file(url, file.path(folder, new_filename), mode = "wb", method = "libcurl")
+    file.copy(new_filename,filename,overwrite=T)
+    file_exists <- grepl(filename, list.files(folder), fixed = TRUE)
+    
+    files_to_remove<-list.files(folder)[file_exists]
+    files_to_remove<-files_to_remove[files_to_remove!=filename]
+    
+    lapply(files_to_remove,file.remove)
+    
+    
+ },
+ error = function(e){
+    
+  },
+  warning = function(w){
+   
+})
+}
+
 
 
 
@@ -18,7 +58,8 @@ load_data<-function(overwrite=F){
   datasets<-list()
   if(!file.exists("vostok.txt")|| overwrite){
     file_url <- 'http://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2'
-    download.file(file_url,'vostok.txt')
+    
+    download_with_overwrite(file_url,'vostok.txt')
   }
   
   vostok <- read_table2("vostok.txt", col_names = FALSE, skip = 21)
@@ -29,7 +70,7 @@ load_data<-function(overwrite=F){
   if(!file.exists("paleotemp.txt") || overwrite){
     
     file_url <- 'http://cdiac.ess-dive.lbl.gov/ftp/trends/temp/vostok/vostok.1999.temp.dat'
-    download.file(file_url,'paleotemp.txt')
+    download_with_overwrite(file_url,'paleotemp.txt')
   }
   paleotemp <- read_table2("paleotemp.txt", col_names = FALSE, skip = 60)
   colnames(paleotemp) <- c('depth','age_ice','deuterium','temp')
@@ -37,7 +78,7 @@ load_data<-function(overwrite=F){
   
   if(!file.exists("maunaloa.txt")|| overwrite){
     file_url <- 'ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt'
-    download.file(file_url,'maunaloa.txt')
+    download_with_overwrite(file_url,'maunaloa.txt')
   }
   
   maunaloa <- read_table2("maunaloa.txt", col_names = FALSE, skip = 72)
@@ -47,7 +88,7 @@ load_data<-function(overwrite=F){
   
   if(!file.exists("gisstemp.csv") || overwrite){
     file_url <- 'https://data.giss.nasa.gov/gistemp/tabledata_v3/GLB.Ts+dSST.csv'
-    download.file(file_url,'gisstemp.csv')
+    download_with_overwrite(file_url,'gisstemp.csv')
   }
   
   gisstemp <- read_csv("gisstemp.csv", skip=1, na='***')
@@ -62,7 +103,7 @@ load_data<-function(overwrite=F){
   
   if(!file.exists("gmsl_sat.csv")|| overwrite){
     file_url <- 'http://sealevel.colorado.edu/files/2018_rel1/sl_ns_global.txt'
-    download.file(file_url,'gmsl_sat.csv')
+    download_with_overwrite(file_url,'gmsl_sat.csv')
   }
   gmsl_sat <- read_table2("gmsl_sat.csv", col_names = FALSE, skip = 1)
   colnames(gmsl_sat) <- c('date','gmsl_sat')
@@ -70,7 +111,7 @@ load_data<-function(overwrite=F){
   
   if(!file.exists("gmsl_tide.zip")|| overwrite){
     file_url <- 'http://www.cmar.csiro.au/sealevel/downloads/church_white_gmsl_2011.zip'
-    download.file(file_url,'gmsl_tide.zip')
+    download_with_overwrite(file_url,'gmsl_tide.zip')
     unzip('gmsl_tide.zip', 'CSIRO_Recons_gmsl_mo_2011.csv', overwrite = T)
   }
   gmsl_tide <- read_csv("CSIRO_Recons_gmsl_mo_2011.csv", col_types = cols(`GMSL uncertainty (mm)` = col_skip()))
@@ -94,7 +135,7 @@ load_data<-function(overwrite=F){
   
   if(!file.exists("arctic_ice_min.csv")|| overwrite){
     file_url <- 'ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/monthly/data/N_09_extent_v3.0.csv'
-    download.file(file_url, 'arctic_ice_min.csv')
+    download_with_overwrite(file_url, 'arctic_ice_min.csv')
   }
   
   arctic_ice_min <- read_csv("arctic_ice_min.csv")
@@ -105,7 +146,7 @@ load_data<-function(overwrite=F){
 
 
 #load the data
-datasets<-load_data(overwrite=F)
+datasets<-load_data(overwrite=T)
 
 
 

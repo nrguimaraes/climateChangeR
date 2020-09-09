@@ -24,9 +24,9 @@ load("state_abbs.RDATA")
 #considering a small time interval or all data available
 #EXAMPLES:
 #YEAR="all"
-#YEAR=c(1950,2018)
+YEAR=c(1950,2018)
 
-YEAR="all"
+#YEAR="all"
 
 #type of function to use
 #EXAMPLES 
@@ -40,7 +40,8 @@ TYPE="average"
 #REGION="world"
 #REGION=list("Brazil")
 #REGION=list("Portugal","Spain")
-REGION="USA"
+#REGION="USA"
+REGION=list("Morocco","Algeria","Libya","Egypt","Nigeer","Chad","Tunesia","Sudan","Mauretania", "Kenia", "Mali","Ethiopia","Senegal","Burkina Faso","Somalia","Nigeria")
 
 
 
