@@ -24,7 +24,7 @@ load("state_abbs.RDATA")
 #considering a small time interval or all data available
 #EXAMPLES:
 #YEAR="all"
-YEAR=c(1950,2018)
+YEAR=c(1920,2018)
 
 #YEAR="all"
 
@@ -215,7 +215,7 @@ fig <- clim_dataf %>%
 #We complement the previous information with additional layout configurations such as the title and the geographic
 #configuration (explained earlier)
 fig <- fig %>% layout(
-  title= plot_title<-paste0("Evolution of the Average Temperature (C) through the years (",clim_dataf$Year[1],"-",clim_dataf$Year[nrow(clim_dataf)],")"),
+  title= plot_title<-paste0("Evolution of the Average Temperature (C) through the years (<b>",clim_dataf$Year[1],"-",clim_dataf$Year[nrow(clim_dataf)],"</b>)"),
   geo=g
 )
 

@@ -35,7 +35,7 @@ download_with_overwrite <- function(url, filename,overwrite=TRUE)
     
     files_to_remove<-list.files(folder)[file_exists]
     files_to_remove<-files_to_remove[files_to_remove!=filename]
-    
+    lapply(files_to_remove,unlink)
     lapply(files_to_remove,file.remove)
     
     
