@@ -169,7 +169,11 @@ b1<-plot_ly(datasets$vostok_temperature,x=~age_ice,y=rollmean(datasets$vostok_te
 
 
 #aggregate both with a shared X value (for better visualization interaction)
-fig <- subplot(nrows=2,a1, b1,shareX = T,shareY = F)  %>% layout(title = "Paleoclimate: The Link Between CO2 and Temperature")
+fig <- subplot(nrows=2,a1, b1,shareX = T,shareY = F)  %>% 
+  layout(title = "Paleoclimate: The Link Between CO2 and Temperature",
+         xaxis = list(title='Millennia before present'),
+         yaxis=list(title='Temperature (C)'))
+         
 
 
 #fig
@@ -190,7 +194,7 @@ agg<-agg[order(agg$year),]
 
 #build plot with respect to co2 in atmosphere
 fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2")%>% add_trace(y=~trend,name="trend")%>%
-  layout(title='Rising Atmospheric CO2 (Keeling Curve)')
+  layout(title='Rising Atmospheric CO2 (Keeling Curve)',yaxis=list(title="CO2 (in ppmv)"))
   
       
 #fig2
@@ -227,7 +231,8 @@ datasets$sea_level<-datasets$sea_level %>%
   mutate(method = replace(method, method == 'gmsl_sat', "Satellite observations"))
 
 #Build the plot for sea_leval data
-fig4<-plot_ly(datasets$sea_level,x=~date,y=~gmsl,color = ~method, type = 'scatter', mode = 'lines')
+fig4<-plot_ly(datasets$sea_level,x=~date,y=~gmsl,color = ~method, type = 'scatter', mode = 'lines') %>% 
+  layout(yaxis=list(title="sea level (cm)"))
 
 
 
