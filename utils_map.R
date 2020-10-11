@@ -1,7 +1,11 @@
 #https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data
 #http://berkeleyearth.org/about/
 
+list.of.packages <- c("readr", "dplyr","tidyr","plotly")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 
+if(length(new.packages)!=0) 
+  install.packages(new.packages)
 
 library(readr) # CSV file I/O, e.g. the read_csv function
 library(dplyr)

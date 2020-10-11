@@ -1,9 +1,18 @@
+list.of.packages <- c("tidyverse", "patchwork","lubridate","zoo","plotly","tools","RJSONIO")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+
+if(length(new.packages)!=0) 
+  install.packages(new.packages)
+
+
 library(tidyverse)
 library(patchwork)
 library(lubridate)
 library(zoo)
 library(plotly)
 library(tools)
+
+
 
 
 #Adapting the content from https://rethinking.rbind.io/2018/11/16/the-top-five-climate-charts-using-ggplot2/ 
