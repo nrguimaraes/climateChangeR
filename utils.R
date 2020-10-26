@@ -91,7 +91,7 @@ load_data<-function(overwrite=F){
   }
   
   maunaloa <- read_table2("maunaloa.txt", col_names = FALSE, skip = 72)
-  colnames(maunaloa) <- c('year', 'month', 'date', 'average', 'interpolated', 'trend','days')
+  colnames(maunaloa) <- c('year', 'month', 'date', 'average', "de_seasonalized" ,"days",'st.devofdays', 'unc_of_mon_mean')
   maunaloa$date <- as.Date(as.yearmon(paste(maunaloa$year, maunaloa$month, sep='-')))
   datasets$co2<-maunaloa
   
@@ -181,7 +181,7 @@ b1<-plot_ly(datasets$vostok_temperature,x=~age_ice,y=rollmean(datasets$vostok_te
 fig <- subplot(nrows=2,a1, b1,shareX = T,shareY = F)  %>% 
   layout(title = "Paleoclimate: The Link Between CO2 and Temperature",
          xaxis = list(title='Millennia before present'),
-         yaxis=list(title='Temperature (C)'),yaxis2=list(title="CO2 concentration (ppm)"))
+         yaxis=list(title='CO2 concentration (ppm)'),yaxis2=list(title="Temperature (C)"))
 
 
 #fig
@@ -201,7 +201,7 @@ agg<-agg[order(agg$year),]
 
 
 #build plot with respect to co2 in atmosphere
-fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2")%>% add_trace(y=~trend,name="trend")%>%
+fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2")%>% add_trace(y=~de_seasonalized,name="trend")%>%
   layout(title='Rising Atmospheric CO2 (Keeling Curve)',yaxis=list(title="CO2 (in ppmv)"))
   
       
