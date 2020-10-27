@@ -240,7 +240,7 @@ datasets$sea_level<-datasets$sea_level %>%
 
 #Build the plot for sea_leval data
 fig4<-plot_ly(datasets$sea_level,x=~date,y=~gmsl,color = ~method, type = 'scatter', mode = 'lines') %>% 
-  layout(yaxis=list(title="sea level (cm)"))
+  layout(title="Sea level rise",yaxis=list(title="sea level (mm)"))
 
 
 
