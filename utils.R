@@ -201,7 +201,7 @@ agg<-agg[order(agg$year),]
 
 
 #build plot with respect to co2 in atmosphere
-fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2")%>% add_trace(y=~de_seasonalized,name="trend")%>%
+fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2")%>% add_trace(y=~de_seasonalized,name="trend")%>% 
   layout(title='Rising Atmospheric CO2 (Keeling Curve)',yaxis=list(title="CO2 (in ppmv)"))
   
       
