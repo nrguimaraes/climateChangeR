@@ -162,18 +162,16 @@ datasets<-load_data(overwrite=T)
 
 
 
-
 #Build the first plot with respect to co2
 
-a1 <- plot_ly(datasets$vostok_co2,x=~age_ice,y=~co2,type = 'scatter', mode = 'lines',name = ~"Co2")%>%
+a1 <- plot_ly(datasets$vostok_co2,x=~age_ice,y=~co2,type = 'scatter', mode = "lines",name = ~"Co2")%>%
   layout(xaxis = list(autorange = 'reversed',range=c(420000,0),showticklabels=F,title=""),yaxis=list(title='CO2 concentration (ppm)')) 
 
 
 
 #Buid the second plot with respect to temperature
-b1<-plot_ly(datasets$vostok_temperature,x=~age_ice,y=rollmean(datasets$vostok_temperature$temp, 8, na.pad=TRUE),type = 'scatter', mode = 'lines',name = ~"Temperature") %>%
+b1<-plot_ly(datasets$vostok_temperature,x=~age_ice,y=rollmean(datasets$vostok_temperature$temp, 8, na.pad=TRUE),type = 'scatter', mode = "lines",name = ~"Temperature") %>%
   layout(xaxis = list(title='Millennia before present',autorange = 'reversed',range=c(420000,0),showticklabels=T),yaxis=list(title='Temperature (C)'))
-
 
 
 
@@ -184,11 +182,8 @@ fig <- subplot(nrows=2,a1, b1,shareX = T,shareY = F)  %>%
          yaxis=list(title='CO2 concentration (ppm)'),yaxis2=list(title="Temperature (C)"))
 
 
-#fig
 
-
-
-
+#-----------------------------------------------------#
 #remove outliers
 
 datasets$co2<-datasets$co2[datasets$co2$average!=-99.99,]
