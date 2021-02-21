@@ -25,8 +25,13 @@ loess_data<-loess.smooth(y=y_var,x=x_var,span=0.2)
 #in the add_trace function?
 
 
+
+
 #Buil the plot for the artic sea ice minimum with the respective fitted values
-fig5<-plot_ly(datasets$polar_ice,x=~year,y=~extent,type = 'scatter', mode = 'lines',name="measure")%>%
+
+lm_e<-lm(datasets$polar_ice$extent ~datasets$polar_ice$year)
+
+fig5_smooth<-plot_ly(datasets$polar_ice,x=~year,y=~extent,type = 'scatter', mode = 'lines',name="measure")%>%
   add_trace(x=datasets$polar_ice$year,y=lm_e$fitted.values,name="Linear Regression")%>%
   add_trace(x=,y=,name="Loess Smooth")%>%
   layout(title='Arctic Sea Ice Minimum',yaxis = list(title='million square km'),xaxis = list(title='Year'))
@@ -34,13 +39,23 @@ fig5<-plot_ly(datasets$polar_ice,x=~year,y=~extent,type = 'scatter', mode = 'lin
 
 
 
-fig5
+fig5_smooth
 
 
+#Extra Exercise:  Draw a residual plot with respect to the linear fit. What is the data that must be in the
+#residual_x and residual_y variables?
+
+#Hint use View(lm_e) to inspect what data is stored in the variable that stores the linear regression data.
 
 
+residual_x<-
+residual_y<-
+
+fig5_residuals<-plot_ly(x=residual_x,y=residual_y,name="Residuals",type = 'scatter', mode = 'lines')%>%
+ layout(title='Arctic Sea Ice Minimum (residuals)',yaxis = list(title='million square km'),xaxis = list(title='Year'))
 
 
+fig5_residuals
 
 
 
@@ -71,5 +86,12 @@ fig5
 #   add_trace(x=datasets$polar_ice$year,y=lm_e$fitted.values,name="Linear Regression")%>%
 #   add_trace(x=loess_data$x,y=loess_data$y,name="Loess Smooth")%>%
 #   layout(title='Arctic Sea Ice Minimum',yaxis = list(title='million square km'),xaxis = list(title='Year'))
-# 
-# #
+
+
+
+#Extra exercise
+
+# residual_x<-datasets$polar_ice$yea
+# residual_y<-lm_e$residuals
+
+
