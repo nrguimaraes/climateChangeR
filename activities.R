@@ -98,21 +98,18 @@ fig
 # Remove outliers
 datasets$co2 <- datasets$co2[datasets$co2$average != -99.99, ]
 
-# Aggregate data (by year this time)
+# Aggregate data (by year and month )
 agg <-aggregate(x = datasets$co2,
-                by = list(datasets$co2$year),
+                by=list(datasets$co2$year,datasets$co2$month),
                 FUN = mean)
 agg <- agg[order(agg$year), ]
 
-#we can also simplify the dataset by only selecting the columns that we need (in this case year and average)
-agg<-agg[,c("year","average")]
 
 
 #Then, we proceed to plot the graph
-fig2 <- plot_ly(agg, x =  ~ year, y =  ~ average, type = 'scatter',
-                mode = 'lines', name = "co2") %>% 
-  add_trace(y =  ~ lr, name = "linear regression") %>%
-  layout(title = 'Rising Atmospheric CO2 (Keeling Curve)')
+fig2<-plot_ly(agg,x=~date,y=~average,type = 'scatter', mode = 'lines',name="co2")%>% add_trace(y=~de_seasonalized,name="trend")%>% 
+  layout(title='Rising Atmospheric CO2 (Keeling Curve)',yaxis=list(title="CO2 (in ppmv)"))
+
 
 
 fig2
@@ -123,10 +120,19 @@ fig2
 
 ?lm
 
+#for simplification let us rely only on yearly data. Thus, we can redefine the aggregation dataset
+#by year as follows
+agg <-aggregate(x = datasets$co2,
+                by=list(datasets$co2$year),
+                FUN = mean)
+agg <- agg[order(agg$year), ]
+
+
 #Next, let us try to fit the value in a linear function. For that, we need to define what is our x and y. 
 #In the lm function we can define the formula as y~x. therefore, we need to insert the name of the colums that it
 #will be our y and our x. Replace those values by the name of the columns in the line of code below. 
 #Warning: Do not use "" around the variable name
+
 
 linear_regression<-lm(y~x,agg)
 
