@@ -90,7 +90,7 @@ load_data<-function(overwrite=F){
     download_with_overwrite(file_url,'maunaloa.txt')
   }
   
-  maunaloa <- read_table2("maunaloa.txt", col_names = FALSE, skip = 72)
+  maunaloa <- read_table2("maunaloa.txt", col_names = FALSE, skip = 53)
   colnames(maunaloa) <- c('year', 'month', 'date', 'average', "de_seasonalized" ,"days",'st.devofdays', 'unc_of_mon_mean')
   maunaloa$date <- as.Date(as.yearmon(paste(maunaloa$year, maunaloa$month, sep='-')))
   datasets$co2<-maunaloa
