@@ -1,0 +1,13 @@
+name: climateChanger
+title: climateChanger
+username:
+account: nrguimaraes
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3744926
+bundleId: 4313517
+url: https://nrguimaraes.shinyapps.io/climateChanger/
+when: 1615151503.66857
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData
