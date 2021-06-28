@@ -34,7 +34,7 @@ shinyServer(function(input, output) {
         
         
         a1 <- plot_ly(dataset,x=~age_ice,y=~co2,type = 'scatter', mode = "lines",name = ~"Co2")%>%
-            layout(xaxis = list(autorange = 'reversed',range=c(420000,0),showticklabels=F,title=""),yaxis=list(title='CO2 concentration (ppm)')) 
+            layout(xaxis = list(autorange = 'reversed',range=c(420000,0),showticklabels=F,title=""),yaxis=list(title='CO2 concentration (ppmv)')) 
         
         dataset <- read_table2("paleotemp.txt", col_names = FALSE, skip = 60)
         colnames(dataset) <- c('depth','age_ice','deuterium','temp')
@@ -42,14 +42,14 @@ shinyServer(function(input, output) {
         
         #Buid the second plot with respect to temperature
         b1<-plot_ly(dataset,x=~age_ice,y=rollmean(dataset$temp, 8, na.pad=TRUE),type = 'scatter', mode = "lines",name = ~"Temperature") %>%
-            layout(xaxis = list(title='Millennia before present',autorange = 'reversed',range=c(420000,0),showticklabels=T),yaxis=list(title='Temperature (C)'))
+            layout(xaxis = list(title='Years before present',autorange = 'reversed',range=c(420000,0),showticklabels=T),yaxis=list(title='Temperature (C)'))
         
         
         
         #aggregate both with a shared X value (for better visualization interaction)
         fig <- subplot(nrows=2,a1, b1,shareX = T,shareY = F)  %>% 
             layout(title = "Paleoclimate: The Link Between CO2 and Temperature",
-                   xaxis = list(title='Millennia before present'),
+                   xaxis = list(title='Years before present'),
                    yaxis=list(title='CO2 concentration (ppm)'),yaxis2=list(title="Temperature (C)"),margin=1)
         fig
 
