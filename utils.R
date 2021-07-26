@@ -32,29 +32,35 @@ download_with_overwrite <- function(url, filename,overwrite=TRUE)
   
   file_exists <- grepl(filename, list.files(folder), fixed = TRUE)
   
-  if (any(file_exists))
+  if(!any(file_exists)){
+    new_filename<-filename
+  }
+  
+  else
   {
     new_filename <- paste0(filename, "(", sum(file_exists), ")", ".", ext)
   }
   
-  d<-tryCatch({
-    download.file(url, file.path(folder, new_filename), mode = "wb", method = "libcurl")
-    file.copy(new_filename,filename,overwrite=T)
-    file_exists <- grepl(filename, list.files(folder), fixed = TRUE)
-    
-    files_to_remove<-list.files(folder)[file_exists]
-    files_to_remove<-files_to_remove[files_to_remove!=filename]
-    lapply(files_to_remove,unlink)
-    lapply(files_to_remove,file.remove)
-    
-    
- },
- error = function(e){
-    
-  },
-  warning = function(w){
-   
-})
+  if((any(file_exists) & overwrite) || !any(file_exists)){
+    d<-tryCatch({
+      download.file(url, file.path(folder, new_filename), mode = "wb", method = "libcurl")
+      file.copy(new_filename,filename,overwrite=T)
+      file_exists <- grepl(filename, list.files(folder), fixed = TRUE)
+      
+      files_to_remove<-list.files(folder)[file_exists]
+      files_to_remove<-files_to_remove[files_to_remove!=filename]
+      lapply(files_to_remove,unlink)
+      lapply(files_to_remove,file.remove)
+      
+      
+   },
+   error = function(e){
+      
+    },
+    warning = function(w){
+     
+  })
+  }
 }
 
 
@@ -155,7 +161,7 @@ load_data<-function(overwrite=F){
 
 
 #load the data
-datasets<-load_data(overwrite=T)
+datasets<-load_data(overwrite=F)
 
 
 
