@@ -19,16 +19,16 @@ Forthcoming early 2022 from Springer.
 ## Exploring Climate Change Data with R
 
 Nuno Guimarães, CRACS-INESCTEC and University ofPorto, Portugal
-nuno.r.guimaraes@inesctec.pt
+
 
 Kimmo Vehkalahti, University of Helsinki, Finland
-kimmo.vehkalahti@helsinki.fi
+
 
 Pedro Campos, LIADD-INESCTEC and University of Porto, Portugal
-pcampos@fep.up.pt
+
 
 Joachim Engel,Ludwigsburg University of Education,Germany
-engel@ph-ludwigsburg.de
+
 
 ### Abstract
 
@@ -90,13 +90,9 @@ collaborations between different stakeholders, and other systemic issues.
 # Exploring Climate Change Data with R
 
 Nuno Guimarães, CRACS-INESCTEC and University ofPorto, Portugal
-nuno.r.guimaraes@inesctec.pt
 Kimmo Vehkalahti, University of Helsinki, Finland
-kimmo.vehkalahti@helsinki.fi
 Pedro Campos, LIADD-INESCTEC and University of Porto, Portugal
-pcampos@fep.up.pt
 Joachim Engel,Ludwigsburg University of Education,Germany
-engel@ph-ludwigsburg.de
 
 **Abstract**
 
