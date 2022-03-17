@@ -5,17 +5,14 @@ to be published in 2021.
 
 (work in progress - more details to be added later)
 
-
-```
--- Pre-print draft (July 2021) --
+## Pre-print draft (July 2021)
 Do not post to other websites or circulate without authors' written consent
 This manuscript is copyrighted (C) to the authors
-```
-```
+
 To appear as Chapter 11 in the book: Statistics forempowerment and social engagement:
 teaching Civic Statistics to develop informed citizens. (Chief Editor: Jim Ridgway).
 Forthcoming early 2022 from Springer.
-```
+
 ## Exploring Climate Change Data with R
 
 Nuno Guimarães, CRACS-INESCTEC and University ofPorto, Portugal
@@ -51,16 +48,13 @@ social engagement: Teaching Civic Statistics to develop informed citizens_. Spri
 See a Book Overview and Table of Contents on the next page
 
 
-```
 Book Overview: J. Ridgway (Ed.). (2022). Statistics for empowerment and social engagement:
 teaching Civic Statistics to develop informed citizens. Springer.
-```
-```
+
 Effective citizen engagement with social issues requires active participation and a broad
 understanding of data and statistics about societal issues. However, many statistics curricula are
 not designed to teach relevant skills nor to improve learners' statistical literacy.
-```
-```
+
 This book offers practical approaches to working in a new field of knowledge - Civic Statistics -
 which sets out to engage with, and overcome well documented and long-standing problems in
 teaching quantitative skills. The book includes 23 peer-reviewed chapters, written in coordination
@@ -69,8 +63,7 @@ work of teachers and lecturers working both at the high school and tertiary (uni
 designed to promote and improve the critical understanding of quantitative evidence relevant to
 burning social issues – such as epidemics, climate change, poverty, migration, natural disasters,
 inequality, employment, and racism.
-```
-```
+
 Evidence about social issues is provided to the public via print and digital media, official statistics
 offices, and other information channels, and a great deal of data is accessible both as aggregated
 summaries and as individual records. Chapters illustrate the approaches needed to teach and
@@ -82,7 +75,7 @@ development of curricula and educational resources, use of emerging technologies
 visualizations, preparation of teachers and teaching approaches and sources for relevant datasets
 and rich texts about Civic Statistics, and ideas regarding future research, assessment,
 collaborations between different stakeholders, and other systemic issues.
-```
+
 
 
 # Chapter 11
