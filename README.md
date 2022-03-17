@@ -14,17 +14,13 @@ To appear as Chapter 11 in the book: Statistics for empowerment and social engag
 teaching Civic Statistics to develop informed citizens. (Chief Editor: Jim Ridgway).
 Forthcoming late 2022 from Springer.
 
-## The Chapter:  Exploring Climate Change Data with R
+## Exploring Climate Change Data with R
+
+### Authors
 
 Nuno Guimarães, CRACS-INESCTEC and University of Porto, Portugal
-
-
 Kimmo Vehkalahti, University of Helsinki, Finland
-
-
 Pedro Campos, LIADD-INESCTEC and University of Porto, Portugal
-
-
 Joachim Engel,Ludwigsburg University of Education,Germany
 
 
