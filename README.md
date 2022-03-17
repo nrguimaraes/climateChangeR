@@ -46,15 +46,10 @@ students to reproduce and enhance the visualisations.
 **Proposed citation for this chapter** : Guimarães, N,Vehkalahti, K., Campos, P., & Engel, J.
 (2022). Exploring Climate Change Data with R. In J. Ridgway,(Ed.), _Statistics for empowerment and
 social engagement: Teaching Civic Statistics to develop informed citizens_. Springer.
-See a Book Overview and Table of Contents on the next page
 
 
-## The Book: Statistics for empowerment and social engagement: teaching Civic Statistics to develop informed citizens 
 
-
-J. Ridgway (Ed.). (2022). Statistics for empowerment and social engagement:
-teaching Civic Statistics to develop informed citizens. Springer.
-
+### Book Overview
 Effective citizen engagement with social issues requires active participation and a broad
 understanding of data and statistics about societal issues. However, many statistics curricula are
 not designed to teach relevant skills nor to improve learners' statistical literacy.
