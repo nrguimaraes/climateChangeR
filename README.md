@@ -14,7 +14,7 @@ To appear as Chapter 11 in the book: Statistics for empowerment and social engag
 teaching Civic Statistics to develop informed citizens. (Chief Editor: Jim Ridgway).
 Forthcoming late 2022 from Springer.
 
-## Exploring Climate Change Data with R
+## The Chapter:  Exploring Climate Change Data with R
 
 Nuno Guimarães, CRACS-INESCTEC and University of Porto, Portugal
 
@@ -49,7 +49,8 @@ social engagement: Teaching Civic Statistics to develop informed citizens_. Spri
 See a Book Overview and Table of Contents on the next page
 
 
-##Book Overview
+## The Book: Statistics for empowerment and social engagement: teaching Civic Statistics to develop informed citizens 
+
 
 J. Ridgway (Ed.). (2022). Statistics for empowerment and social engagement:
 teaching Civic Statistics to develop informed citizens. Springer.
@@ -57,7 +58,6 @@ teaching Civic Statistics to develop informed citizens. Springer.
 Effective citizen engagement with social issues requires active participation and a broad
 understanding of data and statistics about societal issues. However, many statistics curricula are
 not designed to teach relevant skills nor to improve learners' statistical literacy.
-
 This book offers practical approaches to working in a new field of knowledge - Civic Statistics -
 which sets out to engage with, and overcome well documented and long-standing problems in
 teaching quantitative skills. The book includes 23 peer-reviewed chapters, written in coordination
@@ -66,7 +66,6 @@ work of teachers and lecturers working both at the high school and tertiary (uni
 designed to promote and improve the critical understanding of quantitative evidence relevant to
 burning social issues – such as epidemics, climate change, poverty, migration, natural disasters,
 inequality, employment, and racism.
-
 Evidence about social issues is provided to the public via print and digital media, official statistics
 offices, and other information channels, and a great deal of data is accessible both as aggregated
 summaries and as individual records. Chapters illustrate the approaches needed to teach and
