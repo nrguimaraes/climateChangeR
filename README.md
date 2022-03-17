@@ -1,21 +1,22 @@
 # climateChangeR
+
 This is a repository for the datasets and R codes of "Exploring Climate Change Data with R",
 a book chapter authored by Nuno Guimarães, Kimmo Vehkalahti, Pedro Campos, and Joachim Engel,
-to be published in 2021.
+to be published in 2022.
 
 (work in progress - more details to be added later)
 
-## Pre-print draft (July 2021)
+Pre-print draft available [here](https://www.researchgate.net/publication/359300567_Exploring_Climate_Change_Data_with_R) 
 Do not post to other websites or circulate without authors' written consent
 This manuscript is copyrighted (C) to the authors
 
-To appear as Chapter 11 in the book: Statistics forempowerment and social engagement:
+To appear as Chapter 11 in the book: Statistics for empowerment and social engagement:
 teaching Civic Statistics to develop informed citizens. (Chief Editor: Jim Ridgway).
-Forthcoming early 2022 from Springer.
+Forthcoming late 2022 from Springer.
 
 ## Exploring Climate Change Data with R
 
-Nuno Guimarães, CRACS-INESCTEC and University ofPorto, Portugal
+Nuno Guimarães, CRACS-INESCTEC and University of Porto, Portugal
 
 
 Kimmo Vehkalahti, University of Helsinki, Finland
@@ -48,7 +49,9 @@ social engagement: Teaching Civic Statistics to develop informed citizens_. Spri
 See a Book Overview and Table of Contents on the next page
 
 
-Book Overview: J. Ridgway (Ed.). (2022). Statistics for empowerment and social engagement:
+##Book Overview
+
+J. Ridgway (Ed.). (2022). Statistics for empowerment and social engagement:
 teaching Civic Statistics to develop informed citizens. Springer.
 
 Effective citizen engagement with social issues requires active participation and a broad
@@ -78,26 +81,3 @@ collaborations between different stakeholders, and other systemic issues.
 
 
 
-# Chapter 11
-
-# Exploring Climate Change Data with R
-
-Nuno Guimarães, CRACS-INESCTEC and University ofPorto, Portugal
-Kimmo Vehkalahti, University of Helsinki, Finland
-Pedro Campos, LIADD-INESCTEC and University of Porto, Portugal
-Joachim Engel,Ludwigsburg University of Education,Germany
-
-**Abstract**
-
-Climate change is an existential threat facing humanity and the future of our planet. The
-signs of global warming are everywhere, and they are more complex than just the climbing
-temperatures. Climate data on a massive scale has been collected by various scientific groups
-around the globe. Exploring and extracting useful knowledge from large quantities of data
-requires powerful software. In this chapter we present some possibilities for exploring and
-visualising climate change data in connection with statistics education using the freely
-accessible statistical programming language _R_ togetherwith the computing environment
-_RStudio_. In addition to the visualisations, we provideannotated references to climate data
-repositories and extracts of our openly published R scripts for encouraging teachers and
-students to reproduce and enhance the visualisations.
-
-**Keywords:** R; Coding; Climate Data; Data Visualisation;Multivariate Data
