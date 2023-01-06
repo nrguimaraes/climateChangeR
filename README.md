@@ -2,7 +2,7 @@
 
 This is a repository for the datasets and R codes of "Exploring Climate Change Data with R",
 a book chapter authored by Nuno Guimarães, Kimmo Vehkalahti, Pedro Campos, and Joachim Engel,
-to be published in 2022.
+to be published in 2023.
 
 (work in progress - more details to be added later)
 
@@ -18,7 +18,7 @@ Forthcoming late 2022 from Springer.
 
 ### Authors
 
-Nuno Guimarães, CRACS-INESCTEC and University of Porto, Portugal
+Nuno Guimarães, INESCTEC and University of Porto, Portugal
 Kimmo Vehkalahti, University of Helsinki, Finland
 Pedro Campos, LIADD-INESCTEC and University of Porto, Portugal
 Joachim Engel,Ludwigsburg University of Education,Germany
@@ -40,7 +40,7 @@ students to reproduce and enhance the visualisations.
 **Keywords:** R; Coding; Climate Data; Data Visualisation;Multivariate Data
 
 **Proposed citation for this chapter** : Guimarães, N,Vehkalahti, K., Campos, P., & Engel, J.
-(2022). Exploring Climate Change Data with R. In J. Ridgway,(Ed.), _Statistics for empowerment and
+(2023). Exploring Climate Change Data with R. In J. Ridgway,(Ed.), _Statistics for empowerment and
 social engagement: Teaching Civic Statistics to develop informed citizens_. Springer.
 
 
