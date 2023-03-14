@@ -40,7 +40,7 @@ students to reproduce and enhance the visualisations.
 
 **Proposed citation for this chapter** : Guimarães, N., Vehkalahti, K., Campos, P., Engel, J. (2022). Exploring Climate Change Data with R. In: Ridgway, J. (eds) Statistics for Empowerment and Social Engagement. Springer, Cham. https://doi.org/10.1007/978-3-031-20748-8_11
 
-**BibTex Entry**
+
 ```
 @Inbook{Guimarães2022,
 author="Guimar{\~a}es, Nuno
