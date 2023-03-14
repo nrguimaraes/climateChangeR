@@ -17,24 +17,16 @@ teaching Civic Statistics to develop informed citizens. (Chief Editor: Jim Ridgw
 
 ### Authors
 
-Nuno Guimarães, INESCTEC and University of Porto, Portugal
+Nuno Guimarães, LIAAD-INESCTEC and University of Porto, Portugal
 Kimmo Vehkalahti, University of Helsinki, Finland
-Pedro Campos, LIADD-INESCTEC and University of Porto, Portugal
+Pedro Campos, LIAAD-INESCTEC and University of Porto, Portugal
 Joachim Engel,Ludwigsburg University of Education,Germany
 
 
 ### Abstract
 
-Climate change is an existential threat facing humanity and the future of our planet. The
-signs of global warming are everywhere, and they are more complex than just the climbing
-temperatures. Climate data on a massive scale has been collected by various scientific groups
-around the globe. Exploring and extracting useful knowledge from large quantities of data
-requires powerful software. In this chapter we present some possibilities for exploring and
-visualising climate change data in connection with statistics education using the freely
-accessible statistical programming language _R_ togetherwith the computing environment
-_RStudio_. In addition to the visualisations, we provideannotated references to climate data
-repositories and extracts of our openly published R scripts for encouraging teachers and
-students to reproduce and enhance the visualisations.
+Climate change is an existential threat facing humanity and the future of our planet. The signs of global warming are everywhere, and they are more complex than just the climbing temperatures. Climate data on a massive scale has been collected by various scientific groups around the globe. Exploring and extracting useful knowledge from large quantities of data requires powerful software. In this chapter we present some possibilities for exploring and
+visualising climate change data in connection with statistics education using the freely accessible statistical programming language _R_ together with the computing environment _RStudio_. In addition to the visualisations, we provide annotated references to climate data repositories and extracts of our openly published R scripts for encouraging teachers and students to reproduce and enhance the visualisations.
 
 **Keywords:** R; Coding; Climate Data; Data Visualisation;Multivariate Data
 
@@ -88,4 +80,6 @@ and rich texts about Civic Statistics, and ideas regarding future research, asse
 collaborations between different stakeholders, and other systemic issues.
 
 
+### Author Contacts
 
+Nuno Guimarães: nuno.r.guimaraes _at_ inesctec.pt
